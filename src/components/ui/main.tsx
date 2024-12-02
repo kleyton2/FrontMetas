@@ -38,8 +38,13 @@ function Main() {
       </section>
 
       <section className="flex flex-row justify-center ">
+<<<<<<< HEAD
         <div className="flex flex-row justify-center ">
           <div className="flex-1 text-center pt-14 pr-6">
+=======
+        <div className="flex flex-row justify-center max-sm:flex-col">
+          <div className="flex-1 text-center pt-14 pr-6 max-sm:pb-5">
+>>>>>>> 6484498 (header)
             <img
               src="dayGols-cadastrar-metas.jpg"
               alt="cadastrar metas"
@@ -59,7 +64,11 @@ function Main() {
             <p className="leading-6">4. Acompanhe seu progresso.</p>
           </div>
 
+<<<<<<< HEAD
           <div className=" flex-1 text-center pt-14 pr-6 border-x-2 border-zinc-200">
+=======
+          <div className=" flex-1 text-center pt-14 pr-6 sm:border-x-2 sm:border-zinc-200 max-sm:border-y-4 max-sm:border-zinc-200 max-sm:pb-5">
+>>>>>>> 6484498 (header)
             <img
               src="dayGols-cadastrando-metas.jpg"
               alt="cadastrando metas"
@@ -83,7 +92,11 @@ function Main() {
 
           <div className="flex-1 text-center pt-14 pr-6">
             <img
+<<<<<<< HEAD
               src="dayGols-meta-cadastrada.jpg"
+=======
+              src="dayGols-meta-cadastrada-part2.jpg"
+>>>>>>> 6484498 (header)
               alt="meta cadastrada"
               className="h-96 w-80 p-3.5 mb-6 border-t border-l border-b-4 border-r-4 border-violet-300 inline"
             />

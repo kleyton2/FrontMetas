@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
 import { useState } from 'react'
+=======
+import { useState, useEffect } from 'react'
+import { Button } from './ui/button'
+import { Input } from './ui/input'
+import { Label } from './ui/label'
+>>>>>>> 6484498 (header)
 import metas from '../assets/metas.png'
 
 interface SignUpProps {
@@ -23,6 +30,17 @@ export default function SignUp({ onLoginClick, onUserSignup }: SignUpProps) {
   const [phone, setPhone] = useState('')
   const [cpf, setCpf] = useState('')
   const [error, setError] = useState('')
+<<<<<<< HEAD
+=======
+  const [isSubmitting] = useState(false)
+
+  // useEffect(() => {
+  //   // Limpar o localStorage quando a página for recarregada
+  //   window.onbeforeunload = () => {
+  //     localStorage.clear()
+  //   }
+  // }, [])
+>>>>>>> 6484498 (header)
 
   const handleSignup = () => {
     if (
@@ -56,7 +74,24 @@ export default function SignUp({ onLoginClick, onUserSignup }: SignUpProps) {
       return
     }
 
+<<<<<<< HEAD
     const newUser = { fullName, email, phone, cpf, password }
+=======
+    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]')
+
+    // Verificar se o email já está cadastrado
+    if (existingUsers.some((user: { email: string }) => user.email === email)) {
+      setError('Email is already registered')
+      return
+    }
+
+    const newUser = { fullName, email, phone, cpf, password }
+
+    // Salvar o novo usuário no localStorage
+    existingUsers.push(newUser)
+    localStorage.setItem('users', JSON.stringify(existingUsers))
+
+>>>>>>> 6484498 (header)
     onUserSignup(newUser)
     alert('Cadastro realizado com sucesso!')
     resetFields()
@@ -66,8 +101,29 @@ export default function SignUp({ onLoginClick, onUserSignup }: SignUpProps) {
     }, 2000)
   }
 
+<<<<<<< HEAD
   const validateCPF = (cpfInput: string) => {
     const cpf = cpfInput.replace(/\D/g, '')
+=======
+  const handleLogin = () => {
+    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]')
+    const user = existingUsers.find(
+      (user: { email: string; password: string }) =>
+        user.email === email && user.password === password
+    )
+
+    if (user) {
+      onUserSignup(user)
+      alert('Login realizado com sucesso!')
+      resetFields()
+    } else {
+      setError('Invalid email or password')
+    }
+  }
+
+  const validateCPF = (cpfInput: string) => {
+    const cpf = cpfInput.replace(/\D/g, '') // Remove qualquer caractere não numérico
+>>>>>>> 6484498 (header)
     if (cpf.length !== 11) return false
 
     let sum = 0
@@ -112,7 +168,11 @@ export default function SignUp({ onLoginClick, onUserSignup }: SignUpProps) {
 
   const formatPhone = (value: string) => {
     const formattedValue = value
+<<<<<<< HEAD
       .replace(/\D/g, '')
+=======
+      .replace(/\D/g, '') // Remove caracteres não numéricos
+>>>>>>> 6484498 (header)
       .replace(/^(\d{2})(\d)/, '($1) $2')
       .replace(/(\d)(\d{4})$/, '$1-$2')
       .replace(/-(\d{4})$/, '$1')
@@ -124,7 +184,11 @@ export default function SignUp({ onLoginClick, onUserSignup }: SignUpProps) {
 
   const formatCPF = (value: string) => {
     const formattedValue = value
+<<<<<<< HEAD
       .replace(/\D/g, '')
+=======
+      .replace(/\D/g, '') // Remove caracteres não numéricos
+>>>>>>> 6484498 (header)
       .replace(/(\d{3})(\d)/, '$1.$2')
       .replace(/(\d{3})(\d)/, '$1.$2')
       .replace(/(\d{3})(\d)/, '$1-$2')
@@ -232,8 +296,14 @@ export default function SignUp({ onLoginClick, onUserSignup }: SignUpProps) {
                 size="default"
                 className="w-full"
                 type="submit"
+<<<<<<< HEAD
               >
                 Sign Up
+=======
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Signing up...' : 'Sign Up'}
+>>>>>>> 6484498 (header)
               </Button>
             </div>
             <p className="mt-6 text-center text-sm text-gray-500">
