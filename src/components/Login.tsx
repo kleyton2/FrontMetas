@@ -1,11 +1,7 @@
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
-<<<<<<< HEAD
-import { useState } from 'react'
-=======
 import { useState, useEffect } from 'react'
->>>>>>> 6484498 (header)
 import metas from '../assets/metas.png'
 
 interface User {
@@ -19,19 +15,6 @@ interface User {
 interface LoginProps {
   onSignupClick: () => void
   onLoginSuccess: (user: User) => void
-<<<<<<< HEAD
-  users: User[]
-}
-
-export default function Login({
-  onSignupClick,
-  onLoginSuccess,
-  users,
-}: LoginProps) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-=======
 }
 
 export default function Login({ onSignupClick, onLoginSuccess }: LoginProps) {
@@ -45,16 +28,10 @@ export default function Login({ onSignupClick, onLoginSuccess }: LoginProps) {
     const storedUsers = JSON.parse(localStorage.getItem('users') || '[]')
     setUsers(storedUsers)
   }, [])
->>>>>>> 6484498 (header)
 
   const handleLogin = () => {
     const user = users.find(u => u.email === email && u.password === password)
     if (user) {
-<<<<<<< HEAD
-      onLoginSuccess(user) // Passa o usuário autenticado
-    } else {
-      setError('Invalid email or password')
-=======
       // Salva o usuário no localStorage
       localStorage.setItem('user', JSON.stringify(user))
 
@@ -62,7 +39,6 @@ export default function Login({ onSignupClick, onLoginSuccess }: LoginProps) {
       onLoginSuccess(user)
     } else {
       setError('Email ou senha inválidos')
->>>>>>> 6484498 (header)
     }
   }
 
