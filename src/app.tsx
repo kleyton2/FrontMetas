@@ -9,19 +9,22 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import HomePage from './components/home-page';
 import { Header } from './components/ui/header';
+import {AdminPage} from './components/AdminPage'; // Nova página para Admin
 
 interface User {
+  id: string;
   fullName: string;
   email: string;
   phone: string;
   cpf: string;
   password: string;
+  role: 'admin' | 'user'; // Adicionando a propriedade 'role'
 }
 
 export function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado de autenticação
   const [users, setUsers] = useState<User[]>([]); // Estado para armazenar usuários
-  const [currentPage, setCurrentPage] = useState<'home' | 'login' | 'signup' | 'goals'>('home'); // Estado para controlar qual página será exibida
+  const [currentPage, setCurrentPage] = useState<'home' | 'login' | 'signup' | 'goals' | 'admin'>('home'); // Adicionando 'admin' à lista de páginas
   const [showHeader, setShowHeader] = useState(true); // Estado para controlar a visibilidade do Header
 
   const { data } = useQuery({
@@ -30,11 +33,37 @@ export function App() {
     staleTime: 1000 * 60,
   });
 
+  // Função para carregar usuários da API
+  const fetchUsersFromAPI = async () => {
+    try {
+      const response = await fetch('http://localhost:3333/users');
+      if (!response.ok) {
+        throw new Error('Erro ao carregar usuários');
+      }
+      const data = await response.json();
+      return data.users; // Certifique-se de que sua resposta tenha um campo 'users'
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  };
+
   // Função chamada quando o login for bem-sucedido
   const handleLoginSuccess = (user: User) => {
     setIsAuthenticated(true);
-    setCurrentPage('goals'); // Muda para a página de metas
-    setShowHeader(false); // Esconde o Header após login
+
+    // Carregar usuários da API após login
+    fetchUsersFromAPI().then(fetchedUsers => {
+      setUsers(fetchedUsers); // Atualiza o estado com os usuários carregados
+
+      if (user.role === 'admin') {
+        setCurrentPage('admin'); // Redireciona para a página de administração
+      } else {
+        setCurrentPage('goals'); // Redireciona para a página de metas
+      }
+
+      setShowHeader(false); // Esconde o Header após login
+    });
   };
 
   const handleSignUpClick = () => {
@@ -67,7 +96,6 @@ export function App() {
         <Login
           onSignupClick={handleSignUpClick}
           onLoginSuccess={handleLoginSuccess}
-          users={users}
         />
       )}
 
@@ -85,6 +113,9 @@ export function App() {
           <CreateGoal />
         </Dialog>
       )}
+
+      {/* Exibe a página de administração quando o usuário for administrador */}
+      {currentPage === 'admin' && <AdminPage users={users} />}
     </div>
   );
 }
